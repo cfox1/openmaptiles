@@ -286,13 +286,24 @@ echo " "
 echo "-------------------------------------------------------------------------------------"
 echo "====> : Inputs - Outputs md5sum for debugging "
 rm -f ./data/quickstart_checklist.chk
-md5 build/mapping.yaml                     >> ./data/quickstart_checklist.chk
-md5 build/tileset.sql                      >> ./data/quickstart_checklist.chk
-md5 build/openmaptiles.tm2source/data.yml  >> ./data/quickstart_checklist.chk
-md5 ./data/${testdata}                     >> ./data/quickstart_checklist.chk
-md5 ./data/tiles.mbtiles                   >> ./data/quickstart_checklist.chk
-md5 ./data/docker-compose-config.yml       >> ./data/quickstart_checklist.chk
-md5 ./data/osmstat.txt                     >> ./data/quickstart_checklist.chk
+if [[ "$OSTYPE" == "darwin17.0" ]]; then
+    echo "using md5 because you run on mac os"
+    md5 build/mapping.yaml                     >> ./data/quickstart_checklist.chk
+    md5 build/tileset.sql                      >> ./data/quickstart_checklist.chk
+    md5 build/openmaptiles.tm2source/data.yml  >> ./data/quickstart_checklist.chk
+    md5 ./data/${testdata}                     >> ./data/quickstart_checklist.chk
+    md5 ./data/tiles.mbtiles                   >> ./data/quickstart_checklist.chk
+    md5 ./data/docker-compose-config.yml       >> ./data/quickstart_checklist.chk
+    md5 ./data/osmstat.txt                     >> ./data/quickstart_checklist.chk
+else 
+    md5sum build/mapping.yaml                     >> ./data/quickstart_checklist.chk
+    md5sum build/tileset.sql                      >> ./data/quickstart_checklist.chk
+    md5sum build/openmaptiles.tm2source/data.yml  >> ./data/quickstart_checklist.chk
+    md5sum ./data/${testdata}                     >> ./data/quickstart_checklist.chk
+    md5sum ./data/tiles.mbtiles                   >> ./data/quickstart_checklist.chk
+    md5sum ./data/docker-compose-config.yml       >> ./data/quickstart_checklist.chk
+    md5sum ./data/osmstat.txt                     >> ./data/quickstart_checklist.chk
+fi
 cat ./data/quickstart_checklist.chk
 
 ENDTIME=$(date +%s)
